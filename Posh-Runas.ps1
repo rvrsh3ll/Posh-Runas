@@ -33,7 +33,11 @@ Invoke-RunAs -username administrator -password "P@$$word!" -domain CORPA
     [Parameter(
         ValueFromPipeline=$True,
         Mandatory=$False)]
-        [String]$cmd
+        [String]$cmd,
+    [Parameter(
+        ValueFromPipeline=$True,
+        Mandatory=$False)]
+        [String]$args
     )
     PROCESS {
     $sec_password = convertto-securestring $password -asplaintext -force
@@ -42,6 +46,7 @@ Invoke-RunAs -username administrator -password "P@$$word!" -domain CORPA
     $startinfo.Password = $sec_password
     $startinfo.Domain = $domain
     $startinfo.FileName = $cmd
+    $startinfo.Arguments = $args
     $startinfo.UseShellExecute = $false
     [System.Diagnostics.Process]::Start($startinfo)
     }
